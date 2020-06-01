@@ -1,9 +1,6 @@
 # Reaction
 
 [Reaction](http://reactioncommerce.com) is a headless commerce platform built using Node.js, React, and GraphQL. It plays nicely with npm, Docker and Kubernetes.
-
-![Reaction Admin](https://user-images.githubusercontent.com/20409254/61161477-bb033c80-a4b8-11e9-9c5e-4f4f6a68b8d0.png)
-
 # Getting started
 
 Follow the documentation to install Reaction with [Reaction Platform](https://docs.reactioncommerce.com/docs/installation-reaction-platform) for all supported operating systems.
@@ -84,10 +81,3 @@ Use an external GraphQL client to test http://localhost:3000/graphql. GraphQL Pl
 - [Storefront Component Library](http://designsystem.reactioncommerce.com/)
 - [API documentation](http://api.docs.reactioncommerce.com)
 - [Engineering blog posts](https://blog.reactioncommerce.com/tag/engineering/)
-
-## Get help & contact the team
-
-- [Gitter chat](https://gitter.im/reactioncommerce/reaction)
-- Report security vulnerabilities to <mailto:security@reactioncommerce.com>: [Security reporting instructions](https://docs.reactioncommerce.com/reaction-docs/trunk/reporting-vulnerabilities)
-- Request features in this [repository](https://github.com/reactioncommerce/reaction-feature-requests/)
-
