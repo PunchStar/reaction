@@ -1,0 +1,3520 @@
+type Account implements Node {
+  _id: ID!
+  addressBook(
+    after: ConnectionCursor
+    before: ConnectionCursor
+    first: ConnectionLimitInt
+    last: ConnectionLimitInt
+  ): AddressConnection
+  bio: String
+  createdAt: DateTime!
+  currency: Currency
+  emailRecords: [EmailRecord]
+  firstName: String
+  language: String
+  lastName: String
+  metafields: [Metafield]
+  name: String
+  note: String
+  picture: String
+  preferences: JSONObject
+  primaryEmailAddress: Email!
+  updatedAt: DateTime
+  userId: String!
+  username: String
+  groups(
+    after: ConnectionCursor
+    before: ConnectionCursor
+    first: ConnectionLimitInt
+    last: ConnectionLimitInt
+    sortOrder: SortOrder = asc
+    sortBy: GroupSortByField = createdAt
+  ): GroupConnection
+}
+
+type AccountConnection {
+  edges: [AccountEdge]
+  nodes: [Account]
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type AccountEdge implements NodeEdge {
+  cursor: ConnectionCursor!
+  node: Account
+}
+
+enum AccountSortByField {
+  _id
+  createdAt
+  updatedAt
+}
+
+input AddAccountAddressBookEntryInput {
+  accountId: ID!
+  address: AddressInput!
+  clientMutationId: String
+}
+
+type AddAccountAddressBookEntryPayload {
+  address: Address
+  addressEdge: AddressEdge
+  clientMutationId: String
+}
+
+input AddAccountEmailRecordInput {
+  accountId: ID
+  clientMutationId: String
+  email: Email!
+}
+
+type AddAccountEmailRecordPayload {
+  account: Account
+  clientMutationId: String
+}
+
+input AddAccountToGroupInput {
+  accountId: ID!
+  clientMutationId: String
+  groupId: ID!
+}
+
+type AddAccountToGroupPayload {
+  clientMutationId: String
+  group: Group
+}
+
+input AddCartItemsInput {
+  cartId: ID!
+  cartToken: String
+  clientMutationId: String
+  items: [CartItemInput]!
+}
+
+type AddCartItemsPayload {
+  cart: Cart
+  clientMutationId: String
+  incorrectPriceFailures: [IncorrectPriceFailureDetails]!
+  minOrderQuantityFailures: [MinOrderQuantityFailureDetails]!
+}
+
+input AddOrderFulfillmentGroupInput {
+  clientMutationId: String
+  fulfillmentGroup: OrderFulfillmentGroupExistingOrderInput!
+  moveItemIds: [ID]
+  orderId: ID!
+}
+
+type AddOrderFulfillmentGroupPayload {
+  clientMutationId: String
+  newFulfillmentGroupId: ID!
+  order: Order!
+}
+
+type Address {
+  _id: ID
+  address1: String!
+  address2: String
+  city: String!
+  company: String
+  country: String!
+  firstName: String
+  fullName: String!
+  isBillingDefault: Boolean
+  isCommercial: Boolean!
+  isShippingDefault: Boolean
+  lastName: String
+  metafields: [Metafield]
+  phone: String!
+  postal: String!
+  region: String!
+}
+
+type AddressConnection {
+  edges: [AddressEdge]
+  nodes: [Address]
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type AddressEdge {
+  cursor: ConnectionCursor!
+  node: Address
+}
+
+input AddressInput {
+  address1: String!
+  address2: String
+  addressName: String
+  city: String!
+  company: String
+  country: String!
+  firstName: String
+  fullName: String!
+  isBillingDefault: Boolean
+  isCommercial: Boolean
+  isShippingDefault: Boolean
+  lastName: String
+  metafields: [MetafieldInput]
+  phone: String!
+  postal: String!
+  region: String!
+}
+
+enum AddressType {
+  billing
+  shipping
+}
+
+type AddressValidationError {
+  details: String
+  source: String
+  summary: String!
+  type: String!
+}
+
+type AddressValidationResults {
+  suggestedAddresses: [SuggestedAddress]!
+  validationErrors: [AddressValidationError]!
+}
+
+type AddressValidationRule implements Node {
+  _id: ID!
+  countryCodes: [String]
+  createdAt: DateTime!
+  serviceName: String!
+  shopId: ID!
+  updatedAt: DateTime!
+}
+
+type AddressValidationRuleConnection {
+  edges: [AddressValidationRuleEdge]
+  nodes: [AddressValidationRule]
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type AddressValidationRuleEdge implements NodeEdge {
+  cursor: ConnectionCursor!
+  node: AddressValidationRule
+}
+
+enum AddressValidationRuleSortByField {
+  _id
+  createdAt
+  serviceName
+  updatedAt
+}
+
+type AddressValidationService {
+  displayName: String!
+  name: String!
+  supportedCountryCodes: [String]
+}
+
+input AddTagInput {
+  clientMutationId: String
+  displayTitle: String
+  heroMediaUrl: String
+  isVisible: Boolean!
+  metafields: [MetafieldInput]
+  name: String!
+  shopId: ID!
+  slug: String
+}
+
+type AddTagPayload {
+  clientMutationId: String
+  shopId: ID!
+  tag: Tag!
+}
+
+type AppliedSurcharge implements Node {
+  _id: ID!
+  amount: Money!
+  fulfillmentGroupId: ID
+  message(language: String!): String
+  surchargeDefinitionId: ID!
+}
+
+input ApplyDiscountCodeToCartInput {
+  cartId: ID!
+  discountCode: String!
+  shopId: ID!
+  token: String
+}
+
+type ApplyDiscountCodeToCartPayload {
+  cart: Cart!
+  clientMutationId: String
+}
+
+input ApproveOrderPaymentsInput {
+  clientMutationId: String
+  orderId: ID!
+  paymentIds: [ID]!
+  shopId: ID!
+}
+
+type ApproveOrderPaymentsPayload {
+  clientMutationId: String
+  order: Order!
+}
+
+input ArchiveMediaRecordInput {
+  clientMutationId: String
+  mediaRecordId: ID!
+  shopId: ID!
+}
+
+type ArchiveMediaRecordPayload {
+  clientMutationId: String
+  mediaRecord: MediaRecord!
+}
+
+input ArchiveProductsInput {
+  productIds: [ID]!
+  shopId: ID!
+}
+
+type ArchiveProductsPayload {
+  clientMutationId: String
+  products: [Product]!
+}
+
+input ArchiveProductVariantsInput {
+  shopId: ID!
+  variantIds: [ID]!
+}
+
+type ArchiveProductVariantsPayload {
+  clientMutationId: String
+  variants: [ProductVariant]!
+}
+
+type AttributeRestrictions {
+  operator: String!
+  property: String!
+  propertyType: String!
+  value: String!
+}
+
+input AttributeRestrictionsInput {
+  operator: String!
+  property: String!
+  propertyType: String!
+  value: String!
+}
+
+type CalculatedTax {
+  _id: ID!
+  jurisdictionId: String
+  sourcing: TaxSource!
+  tax: Money!
+  taxName: String!
+  taxRate: Rate!
+  taxableAmount: Money!
+}
+
+input CancelOrderItemInput {
+  cancelQuantity: Int!
+  clientMutationId: String
+  itemId: ID!
+  orderId: ID!
+  reason: String
+}
+
+type CancelOrderItemPayload {
+  clientMutationId: String
+  order: Order!
+}
+
+input CaptureOrderPaymentsInput {
+  clientMutationId: String
+  orderId: ID!
+  paymentIds: [ID]!
+  shopId: ID!
+}
+
+type CaptureOrderPaymentsPayload {
+  clientMutationId: String
+  order: Order!
+}
+
+type Cart implements Node {
+  _id: ID!
+  account: Account
+  checkout: Checkout
+  createdAt: DateTime!
+  email: String
+  expiresAt: DateTime
+  items(
+    after: ConnectionCursor
+    before: ConnectionCursor
+    first: ConnectionLimitInt
+    last: ConnectionLimitInt
+    sortOrder: SortOrder = desc
+    sortBy: CartItemsSortByField = addedAt
+  ): CartItemConnection
+  missingItems: [CartItem]
+  referenceId: String
+  shop: Shop!
+  totalItemQuantity: Int!
+  updatedAt: DateTime!
+  surcharges: [AppliedSurcharge]!
+  taxSummary: TaxSummary
+}
+
+type CartItem implements Node {
+  _id: ID!
+  addedAt: DateTime!
+  attributes: [CartItemAttribute]
+  compareAtPrice: Money
+  createdAt: DateTime!
+  imageURLs: ImageSizes
+  metafields: [Metafield]
+  optionTitle: String
+  parcel: ShippingParcel
+  price: Money!
+  priceWhenAdded: Money!
+  productConfiguration: ProductConfiguration!
+  productSlug: String
+  productTags(
+    after: ConnectionCursor
+    before: ConnectionCursor
+    first: ConnectionLimitInt
+    last: ConnectionLimitInt
+    sortOrder: SortOrder = asc
+    sortBy: TagSortByField = _id
+  ): TagConnection
+  productType: String
+  productVendor: String
+  quantity: Int!
+  shop: Shop!
+  subtotal: Money!
+  title: String!
+  updatedAt: DateTime!
+  variantTitle: String
+  inventoryAvailableToSell: Int
+  isBackorder: Boolean!
+  isLowQuantity: Boolean!
+  isSoldOut: Boolean!
+  isTaxable: Boolean!
+  tax: Money
+  taxCode: String
+  taxableAmount: Money
+  taxes: [CalculatedTax]
+}
+
+type CartItemAttribute {
+  label: String
+  value: String
+}
+
+type CartItemConnection {
+  edges: [CartItemEdge]
+  nodes: [CartItem]
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type CartItemEdge implements NodeEdge {
+  cursor: ConnectionCursor!
+  node: CartItem
+}
+
+input CartItemInput {
+  metafields: [MetafieldInput]
+  price: MoneyInput!
+  productConfiguration: ProductConfigurationInput!
+  quantity: Int!
+}
+
+enum CartItemsSortByField {
+  _id
+  addedAt
+}
+
+enum CartReconciliationMode {
+  keepAccountCart
+  keepAnonymousCart
+  merge
+}
+
+type CartSummary {
+  discountTotal: Money!
+  effectiveTaxRate: Rate
+  fulfillmentTotal: Money
+  itemTotal: Money!
+  taxTotal: Money
+  taxableAmount: Money!
+  total: Money!
+  surchargeTotal: Money
+}
+
+type Catalog implements Node {
+  _id: ID!
+  createdAt: DateTime!
+  shop: Shop!
+  updatedAt: DateTime!
+}
+
+input CatalogBooleanFilter {
+  name: CatalogBooleanFilterName!
+  value: Boolean!
+}
+
+enum CatalogBooleanFilterName {
+  isDeleted
+  isVisible
+  isLowQuantity
+  isSoldOut
+  isBackorder
+}
+
+interface CatalogItem {
+  _id: ID!
+  createdAt: DateTime
+  shop: Shop!
+  updatedAt: DateTime
+}
+
+type CatalogItemConnection {
+  edges: [CatalogItemEdge]
+  nodes: [CatalogItem]
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type CatalogItemContent implements CatalogItem, Node {
+  _id: ID!
+  createdAt: DateTime!
+  shop: Shop!
+  updatedAt: DateTime!
+}
+
+type CatalogItemEdge {
+  cursor: ConnectionCursor!
+  node: CatalogItem
+}
+
+type CatalogItemProduct implements CatalogItem, Node {
+  _id: ID!
+  createdAt: DateTime!
+  product: CatalogProduct
+  shop: Shop!
+  updatedAt: DateTime!
+}
+
+enum CatalogItemSortByField {
+  _id
+  createdAt
+  featured
+  minPrice
+  updatedAt
+}
+
+type CatalogProduct implements CatalogProductOrVariant, Node {
+  _id: ID!
+  barcode: String
+  createdAt: DateTime!
+  description: String
+  height: Float
+  isDeleted: Boolean!
+  isVisible: Boolean!
+  length: Float
+  media: [ImageInfo]
+  metaDescription: String
+  metafields: [Metafield]
+  minOrderQuantity: Int
+  originCountry: String
+  pageTitle: String
+  parcel: ShippingParcel
+  primaryImage: ImageInfo
+  productId: ID!
+  productType: String
+  shop: Shop!
+  sku: String
+  slug: String
+  socialMetadata: [SocialMetadata]
+  supportedFulfillmentTypes: [FulfillmentType]!
+  title: String
+  updatedAt: DateTime!
+  variants: [CatalogProductVariant]
+  vendor: String
+  weight: Float
+  width: Float
+  tagIds: [ID]
+  tags(
+    after: ConnectionCursor
+    before: ConnectionCursor
+    first: ConnectionLimitInt
+    last: ConnectionLimitInt
+    sortOrder: SortOrder = asc
+    sortBy: TagSortByField = _id
+  ): TagConnection
+  pricing: [ProductPricingInfo]!
+  isBackorder: Boolean!
+  isLowQuantity: Boolean!
+  isSoldOut: Boolean!
+}
+
+interface CatalogProductOrVariant {
+  barcode: String
+  createdAt: DateTime
+  height: Float
+  length: Float
+  metafields: [Metafield]
+  minOrderQuantity: Int
+  originCountry: String
+  shop: Shop!
+  sku: String
+  title: String
+  updatedAt: DateTime
+  weight: Float
+  width: Float
+}
+
+type CatalogProductVariant implements CatalogProductOrVariant, Node {
+  _id: ID!
+  attributeLabel: String!
+  barcode: String
+  createdAt: DateTime
+  height: Float
+  index: Int!
+  length: Float
+  media: [ImageInfo]
+  metafields: [Metafield]
+  minOrderQuantity: Int
+  optionTitle: String
+  options: [CatalogProductVariant]
+  originCountry: String
+  primaryImage: ImageInfo
+  shop: Shop!
+  sku: String
+  title: String
+  updatedAt: DateTime
+  variantId: ID!
+  weight: Float
+  width: Float
+  pricing: [ProductPricingInfo]!
+  canBackorder: Boolean!
+  inventoryAvailableToSell: Int
+  inventoryInStock: Int
+  isBackorder: Boolean!
+  isLowQuantity: Boolean!
+  isSoldOut: Boolean!
+  isTaxable: Boolean!
+  taxCode: String
+  taxDescription: String
+}
+
+type Checkout {
+  fulfillmentGroups: [FulfillmentGroup]!
+  summary: CartSummary!
+}
+
+input CloneProductsInput {
+  productIds: [ID]!
+  shopId: ID!
+}
+
+type CloneProductsPayload {
+  clientMutationId: String
+  products: [Product]!
+}
+
+input CloneProductVariantsInput {
+  shopId: ID!
+  variantIds: [ID]!
+}
+
+type CloneProductVariantsPayload {
+  clientMutationId: String
+  variants: [ProductVariant]!
+}
+
+input CreateAccountGroupInput {
+  clientMutationId: String
+  group: GroupInput!
+  shopId: ID
+}
+
+type CreateAccountGroupPayload {
+  clientMutationId: String
+  group: Group
+}
+
+input CreateAccountInput {
+  bio: String
+  emails: [EmailRecordInput]!
+  name: String
+  picture: String
+  shopId: ID!
+  userId: ID!
+  username: String
+}
+
+type CreateAccountPayload {
+  account: Account
+  clientMutationId: String
+}
+
+input CreateAddressValidationRuleInput {
+  clientMutationId: String
+  countryCodes: [String]
+  serviceName: String!
+  shopId: ID!
+}
+
+type CreateAddressValidationRulePayload {
+  addressValidationRule: AddressValidationRule!
+  clientMutationId: String
+}
+
+input CreateCartInput {
+  clientMutationId: String
+  items: [CartItemInput]!
+  shopId: ID!
+}
+
+type CreateCartPayload {
+  cart: Cart
+  clientMutationId: String
+  incorrectPriceFailures: [IncorrectPriceFailureDetails]!
+  minOrderQuantityFailures: [MinOrderQuantityFailureDetails]!
+  token: String
+}
+
+input CreatedAtInput {
+  gte: DateTime
+  lte: DateTime
+}
+
+input CreateDiscountCodeInput {
+  clientMutationId: String
+  discountCode: DiscountCodeInput
+  shopId: ID!
+}
+
+type CreateDiscountCodePayload {
+  clientMutationId: String
+  discountCode: DiscountCode
+}
+
+input CreateFlatRateFulfillmentMethodInput {
+  clientMutationId: String
+  method: FlatRateFulfillmentMethodInput!
+  shopId: ID!
+}
+
+type CreateFlatRateFulfillmentMethodPayload {
+  clientMutationId: String
+  method: FlatRateFulfillmentMethod!
+}
+
+input CreateFlatRateFulfillmentRestrictionInput {
+  clientMutationId: String
+  restriction: FlatRateFulfillmentRestrictionInput!
+  shopId: ID!
+}
+
+type CreateFlatRateFulfillmentRestrictionPayload {
+  clientMutationId: String
+  restriction: FlatRateFulfillmentRestriction!
+}
+
+input CreateMediaRecordInput {
+  clientMutationId: String
+  mediaRecord: MediaRecordInput!
+  shopId: ID!
+}
+
+type CreateMediaRecordPayload {
+  clientMutationId: String
+  mediaRecord: MediaRecord!
+}
+
+input CreateNavigationItemInput {
+  clientMutationId: String
+  navigationItem: NavigationItemInput!
+}
+
+type CreateNavigationItemPayload {
+  clientMutationId: String
+  navigationItem: NavigationItem
+}
+
+input CreateNavigationTreeInput {
+  clientMutationId: String
+  draftItems: [NavigationTreeItemInput]
+  name: String!
+  shopId: ID!
+}
+
+type CreateNavigationTreePayload {
+  clientMutationId: String
+  navigationTree: NavigationTree!
+}
+
+input CreateProductInput {
+  product: ProductInput
+  shopId: ID!
+  shouldCreateFirstVariant: Boolean = true
+}
+
+type CreateProductPayload {
+  clientMutationId: String
+  product: Product!
+}
+
+input CreateProductVariantInput {
+  productId: ID!
+  shopId: ID!
+  variant: ProductVariantInput
+}
+
+type CreateProductVariantPayload {
+  clientMutationId: String
+  variant: ProductVariant!
+}
+
+input CreateRefundInput {
+  amount: Float!
+  orderId: ID!
+  paymentId: ID!
+  reason: String
+}
+
+type CreateRefundPayload {
+  clientMutationId: String
+  order: Order!
+}
+
+input CreateShopInput {
+  clientMutationId: String
+  currencyCode: String
+  defaultLanguage: String
+  defaultTimezone: String
+  description: String
+  name: String!
+  type: String
+}
+
+type CreateShopPayload {
+  clientMutationId: String
+  shop: Shop!
+}
+
+input CreateSurchargeInput {
+  clientMutationId: String
+  shopId: ID!
+  surcharge: SurchargeInput!
+}
+
+type CreateSurchargePayload {
+  clientMutationId: String
+  surcharge: Surcharge!
+}
+
+input CreateTaxRateInput {
+  clientMutationId: String
+  country: String
+  postal: String
+  rate: Float!
+  region: String
+  shopId: ID!
+  sourcing: TaxSource = destination
+  taxCode: String
+}
+
+type CreateTaxRatePayload {
+  clientMutationId: String
+  taxRate: TaxRate!
+}
+
+type Currency implements Node {
+  _id: ID!
+  code: String!
+  decimal: String
+  format: String!
+  rate: Float
+  scale: Int
+  symbol: String!
+  thousand: String
+}
+
+type CurrencyExchangeProductPricingInfo {
+  compareAtPrice: Money
+  currency: Currency!
+  displayPrice: String!
+  maxPrice: Float!
+  minPrice: Float!
+  price: Float
+}
+
+type DatabaseInformation {
+  version: String!
+}
+
+scalar Date
+
+scalar DateTime
+
+interface Deletable {
+  isDeleted: Boolean!
+}
+
+input DeleteAddressValidationRuleInput {
+  clientMutationId: String
+  ruleId: ID!
+  shopId: ID!
+}
+
+type DeleteAddressValidationRulePayload {
+  addressValidationRule: AddressValidationRule!
+  clientMutationId: String
+}
+
+input DeleteDiscountCodeInput {
+  clientMutationId: String
+  discountCodeId: ID!
+  shopId: ID!
+}
+
+type DeleteDiscountCodePayload {
+  clientMutationId: String
+  discountCode: DiscountCode
+}
+
+input DeleteFlatRateFulfillmentMethodInput {
+  clientMutationId: String
+  methodId: ID!
+  shopId: ID!
+}
+
+type DeleteFlatRateFulfillmentMethodPayload {
+  clientMutationId: String
+  method: FlatRateFulfillmentMethod!
+}
+
+input DeleteFlatRateFulfillmentRestrictionInput {
+  clientMutationId: String
+  restrictionId: ID!
+  shopId: ID!
+}
+
+type DeleteFlatRateFulfillmentRestrictionPayload {
+  clientMutationId: String
+  restriction: FlatRateFulfillmentRestriction!
+}
+
+input DeleteMediaRecordInput {
+  clientMutationId: String
+  mediaRecordId: ID!
+  shopId: ID!
+}
+
+type DeleteMediaRecordPayload {
+  clientMutationId: String
+  mediaRecord: MediaRecord!
+}
+
+input DeleteNavigationItemInput {
+  clientMutationId: String
+  id: ID!
+  shopId: ID!
+}
+
+type DeleteNavigationItemPayload {
+  clientMutationId: String
+  navigationItem: NavigationItem
+}
+
+input DeleteSurchargeInput {
+  clientMutationId: String
+  shopId: ID!
+  surchargeId: ID!
+}
+
+type DeleteSurchargePayload {
+  clientMutationId: String
+  surcharge: Surcharge!
+}
+
+input DeleteTaxRateInput {
+  clientMutationId: String
+  shopId: ID!
+  taxRateId: ID!
+}
+
+type DeleteTaxRatePayload {
+  clientMutationId: String
+  taxRate: TaxRate!
+}
+
+type DestinationRestrictions {
+  country: [String]
+  postal: [String]
+  region: [String]
+}
+
+input DestinationRestrictionsInput {
+  country: [String]
+  postal: [String]
+  region: [String]
+}
+
+type DiscountCalculation {
+  method: DiscountCalculationMethod
+}
+
+input DiscountCalculationInput {
+  method: DiscountCalculationMethod
+}
+
+enum DiscountCalculationMethod {
+  credit
+  discount
+  sale
+  shipping
+}
+
+type DiscountCode {
+  _id: ID!
+  calculation: DiscountCalculation
+  code: String!
+  conditions: DiscountConditions
+  description: String
+  discount: String
+  discountMethod: DiscountMethod
+  label: String
+  shop: Shop!
+  transactions: [DiscountTransaction]
+}
+
+type DiscountCodeConnection {
+  edges: [DiscountCodeEdge]
+  nodes: [DiscountCode]
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type DiscountCodeEdge {
+  cursor: ConnectionCursor!
+  node: DiscountCode
+}
+
+input DiscountCodeFilterInput {
+  searchField: String
+}
+
+input DiscountCodeInput {
+  calculation: DiscountCalculationInput
+  code: String!
+  conditions: DiscountConditionsInput
+  description: String
+  discount: String
+  discountMethod: DiscountMethod
+  label: String
+  transactions: [DiscountTransactionInput]
+}
+
+type DiscountConditionOrder {
+  endDate: DateTime
+  max: Float
+  min: Float!
+  startDate: DateTime
+}
+
+input DiscountConditionOrderInput {
+  endDate: DateTime
+  max: Float
+  min: Float!
+  startDate: DateTime
+}
+
+type DiscountConditions {
+  accountLimit: Int
+  audience: [String]
+  enabled: Boolean!
+  order: DiscountConditionOrder
+  permissions: [String]
+  products: [String]
+  redemptionLimit: Int
+  tags: [String]
+}
+
+input DiscountConditionsInput {
+  accountLimit: Int
+  audience: [String]
+  enabled: Boolean!
+  order: DiscountConditionOrderInput
+  permissions: [String]
+  products: [String]
+  redemptionLimit: Int
+  tags: [String]
+}
+
+enum DiscountMethod {
+  code
+  rate
+}
+
+type DiscountTransaction {
+  appliedAt: DateTime
+  cartId: String!
+  userId: String!
+}
+
+input DiscountTransactionInput {
+  appliedAt: DateTime
+  cartId: String!
+  userId: String!
+}
+
+enum DistanceUnit {
+  cm
+  ft
+  in
+}
+
+scalar Email
+
+type EmailRecord {
+  address: Email
+  provides: String
+  verified: Boolean
+}
+
+input EmailRecordInput {
+  address: Email
+  provides: String
+  verified: Boolean
+}
+
+input EnablePaymentMethodForShopInput {
+  clientMutationId: String
+  isEnabled: Boolean!
+  paymentMethodName: String!
+  shopId: ID!
+}
+
+type EnablePaymentMethodForShopPayload {
+  clientMutationId: String
+  paymentMethods: [PaymentMethod]!
+}
+
+type ExampleIOUPaymentData {
+  fullName: String!
+}
+
+type ExampleIOUPaymentMethodData {
+  example: String!
+}
+
+type FakeData {
+  doNotUse: String
+}
+
+type FlatRateFulfillmentMethod implements Node {
+  _id: ID!
+  cost: Float
+  fulfillmentTypes: [FulfillmentType]!
+  group: String!
+  handling: Float!
+  isEnabled: Boolean!
+  label: String!
+  name: String!
+  rate: Float!
+  shop: Shop!
+}
+
+type FlatRateFulfillmentMethodConnection {
+  edges: [FlatRateFulfillmentMethodEdge]
+  nodes: [FlatRateFulfillmentMethod]
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type FlatRateFulfillmentMethodEdge {
+  cursor: ConnectionCursor!
+  node: FlatRateFulfillmentMethod
+}
+
+input FlatRateFulfillmentMethodInput {
+  cost: Float
+  fulfillmentTypes: [FulfillmentType]!
+  group: String!
+  handling: Float!
+  isEnabled: Boolean!
+  label: String!
+  name: String!
+  rate: Float!
+}
+
+type FlatRateFulfillmentRestriction implements Node {
+  _id: ID!
+  attributes: [AttributeRestrictions]
+  destination: DestinationRestrictions
+  methodIds: [ID]
+  shopId: ID!
+  type: RestrictionTypeEnum!
+}
+
+type FlatRateFulfillmentRestrictionConnection {
+  edges: [FlatRateFulfillmentRestrictionEdge]
+  nodes: [FlatRateFulfillmentRestriction]
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type FlatRateFulfillmentRestrictionEdge {
+  cursor: ConnectionCursor!
+  node: FlatRateFulfillmentRestriction
+}
+
+input FlatRateFulfillmentRestrictionInput {
+  attributes: [AttributeRestrictionsInput]
+  destination: DestinationRestrictionsInput
+  methodIds: [ID]
+  type: RestrictionTypeEnum!
+}
+
+enum FlatRateFulfillmentRestrictionSortByField {
+  createdAt
+}
+
+type FulfillmentData {
+  shippingAddress: Address
+}
+
+type FulfillmentGroup implements Node {
+  _id: ID!
+  availableFulfillmentOptions: [FulfillmentOption]!
+  data: FulfillmentData
+  items: [CartItem]!
+  selectedFulfillmentOption: FulfillmentOption
+  shippingAddress: Address
+  shop: Shop!
+  type: FulfillmentType!
+}
+
+type FulfillmentMethod implements Node {
+  _id: ID!
+  carrier: String
+  displayName: String!
+  fulfillmentTypes: [FulfillmentType]!
+  group: String
+  name: String!
+}
+
+type FulfillmentOption {
+  fulfillmentMethod: FulfillmentMethod
+  handlingPrice: Money!
+  price: Money!
+}
+
+enum FulfillmentType {
+  digital
+  pickup
+  shipping
+}
+
+input GenerateSitemapsInput {
+  clientMutationId: String
+  shopId: ID!
+}
+
+type GenerateSitemapsPayload {
+  clientMutationId: String
+  wasJobScheduled: Boolean!
+}
+
+type GlobalSettings {
+  doNotUse: String
+}
+
+input GlobalSettingsUpdates {
+  doNotUse: String
+}
+
+type Group implements Node {
+  _id: ID!
+  createdAt: DateTime!
+  createdBy: Account
+  description: String
+  name: String!
+  shop: Shop
+  slug: String!
+  updatedAt: DateTime!
+  permissions: [String]
+}
+
+type GroupConnection {
+  edges: [GroupEdge]
+  nodes: [Group]
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type GroupEdge implements NodeEdge {
+  cursor: ConnectionCursor!
+  node: Group
+}
+
+input GroupInput {
+  description: String
+  name: String!
+  slug: String
+  permissions: [String]
+}
+
+enum GroupSortByField {
+  _id
+  createdAt
+  name
+  updatedAt
+}
+
+type ImageInfo {
+  URLs: ImageSizes
+  _id: ID
+  priority: Int
+  productId: ID
+  variantId: ID
+}
+
+type ImageSizes {
+  large: String
+  medium: String
+  original: String
+  small: String
+  thumbnail: String
+}
+
+type IncorrectPriceFailureDetails {
+  currentPrice: Money!
+  productConfiguration: ProductConfiguration!
+  providedPrice: Money!
+}
+
+input InviteShopMemberInput {
+  clientMutationId: String
+  email: String!
+  groupId: ID!
+  name: String!
+  shopId: ID!
+}
+
+type InviteShopMemberPayload {
+  account: Account
+  clientMutationId: String
+}
+
+scalar JSONObject
+
+enum MassUnit {
+  g
+  kg
+  lb
+  oz
+}
+
+type MediaRecord {
+  _id: ID!
+  metadata: MediaRecordMetadata!
+  original: MediaRecordInfo!
+}
+
+type MediaRecordInfo {
+  name: String!
+  size: Int!
+  type: String!
+  updatedAt: DateTime!
+  uploadedAt: DateTime!
+}
+
+input MediaRecordInfoInput {
+  name: String!
+  size: Int!
+  tempStoreId: String!
+  type: String!
+  updatedAt: DateTime!
+  uploadedAt: DateTime!
+}
+
+input MediaRecordInput {
+  metadata: MediaRecordMetadataInput!
+  original: MediaRecordInfoInput!
+}
+
+type MediaRecordMetadata {
+  isArchived: Boolean!
+  ownerId: String
+  priority: Int
+  productId: String
+  shopId: String!
+  type: String
+  variantId: String
+}
+
+input MediaRecordMetadataInput {
+  priority: Int
+  productId: ID
+  type: String
+  variantId: ID
+}
+
+input MessagesByLanguageInput {
+  content: String!
+  language: String!
+}
+
+type Metafield {
+  description: String
+  key: String
+  namespace: String
+  scope: String
+  value: String
+  valueType: String
+}
+
+input MetafieldInput {
+  description: String
+  key: String!
+  namespace: String
+  scope: String
+  value: String
+  valueType: String
+}
+
+type MinOrderQuantityFailureDetails {
+  minOrderQuantity: Int!
+  productConfiguration: ProductConfiguration!
+  quantity: Int!
+}
+
+type Money {
+  amount: Float!
+  currency: Currency!
+  displayAmount: String!
+}
+
+input MoneyInput {
+  amount: Float!
+  currencyCode: String!
+}
+
+input MoveOrderItemsInput {
+  clientMutationId: String
+  fromFulfillmentGroupId: ID!
+  itemIds: [ID]!
+  orderId: ID!
+  toFulfillmentGroupId: ID!
+}
+
+type MoveOrderItemsPayload {
+  clientMutationId: String
+  order: Order!
+}
+
+type Mutation {
+  echo(str: String): String
+  archiveMediaRecord(
+    input: ArchiveMediaRecordInput!
+  ): ArchiveMediaRecordPayload!
+  createMediaRecord(input: CreateMediaRecordInput!): CreateMediaRecordPayload!
+  deleteMediaRecord(input: DeleteMediaRecordInput!): DeleteMediaRecordPayload!
+  updateMediaRecordPriority(
+    input: UpdateMediaRecordPriorityInput!
+  ): UpdateMediaRecordPriorityPayload!
+  createShop(input: CreateShopInput!): CreateShopPayload!
+  updateShop(input: UpdateShopInput!): UpdateShopPayload!
+  updateGlobalSettings(
+    input: UpdateGlobalSettingsInput!
+  ): UpdateGlobalSettingsPayload!
+  updateShopSettings(
+    input: UpdateShopSettingsInput!
+  ): UpdateShopSettingsPayload!
+  retryFailedEmail(input: RetryFailedEmailInput!): RetryFailedEmailPayload!
+  createAddressValidationRule(
+    input: CreateAddressValidationRuleInput!
+  ): CreateAddressValidationRulePayload!
+  deleteAddressValidationRule(
+    input: DeleteAddressValidationRuleInput!
+  ): DeleteAddressValidationRulePayload!
+  updateAddressValidationRule(
+    input: UpdateAddressValidationRuleInput!
+  ): UpdateAddressValidationRulePayload!
+  verifySMTPEmailSettings(
+    input: VerifySMTPEmailSettingsInput!
+  ): VerifySMTPEmailSettingsInputPayload!
+  updateTemplate(input: UpdateTemplateInput!): UpdateTemplatePayload!
+  addAccountAddressBookEntry(
+    input: AddAccountAddressBookEntryInput!
+  ): AddAccountAddressBookEntryPayload
+  addAccountEmailRecord(
+    input: AddAccountEmailRecordInput!
+  ): AddAccountEmailRecordPayload
+  createAccount(input: CreateAccountInput!): CreateAccountPayload
+  removeAccountAddressBookEntry(
+    input: RemoveAccountAddressBookEntryInput!
+  ): RemoveAccountAddressBookEntryPayload
+  removeAccountEmailRecord(
+    input: RemoveAccountEmailRecordInput!
+  ): RemoveAccountEmailRecordPayload
+  sendResetAccountPasswordEmail(
+    input: SendResetAccountPasswordEmailInput!
+  ): SendResetAccountPasswordEmailPayload
+  setAccountDefaultEmail(
+    input: SetAccountDefaultEmailInput!
+  ): SetAccountDefaultEmailPayload
+  updateAccountAddressBookEntry(
+    input: UpdateAccountAddressBookEntryInput!
+  ): UpdateAccountAddressBookEntryPayload
+  updateAccount(input: UpdateAccountInput!): UpdateAccountPayload
+  addAccountToGroup(input: AddAccountToGroupInput!): AddAccountToGroupPayload
+  createAccountGroup(input: CreateAccountGroupInput!): CreateAccountGroupPayload
+  removeAccountFromGroup(
+    input: RemoveAccountFromGroupInput!
+  ): RemoveAccountFromGroupPayload
+  removeAccountGroup(input: RemoveAccountGroupInput!): RemoveAccountGroupPayload
+  updateAccountGroup(input: UpdateAccountGroupInput!): UpdateAccountGroupPayload
+  inviteShopMember(input: InviteShopMemberInput!): InviteShopMemberPayload
+  archiveProducts(input: ArchiveProductsInput!): ArchiveProductsPayload!
+  archiveProductVariants(
+    input: ArchiveProductVariantsInput!
+  ): ArchiveProductVariantsPayload!
+  updateProductsVisibility(
+    input: UpdateProductsVisibilityInput!
+  ): UpdateProductsVisibilityPayload!
+  createProduct(input: CreateProductInput!): CreateProductPayload!
+  createProductVariant(
+    input: CreateProductVariantInput!
+  ): CreateProductVariantPayload!
+  cloneProducts(input: CloneProductsInput!): CloneProductsPayload!
+  cloneProductVariants(
+    input: CloneProductVariantsInput!
+  ): CloneProductVariantsPayload!
+  updateProduct(input: UpdateProductInput!): UpdateProductPayload!
+  updateProductVariant(
+    input: UpdateProductVariantInput!
+  ): UpdateProductVariantPayload!
+  addTagsToProducts(
+    input: ProductTagsOperationInput!
+  ): ProductTagsOperationPayload!
+  removeTagsFromProducts(
+    input: ProductTagsOperationInput!
+  ): ProductTagsOperationPayload!
+  publishProductsToCatalog(productIds: [ID]!): [CatalogItemProduct]
+  addTag(input: AddTagInput!): AddTagPayload!
+  removeTag(input: RemoveTagInput!): RemoveTagPayload!
+  setTagHeroMedia(input: SetTagHeroMediaInput!): SetTagHeroMediaPayload!
+  updateTag(input: UpdateTagInput!): UpdateTagPayload!
+  updateProductVariantPrices(
+    input: UpdateProductVariantPricesInput!
+  ): UpdateProductVariantPricesPayload!
+  recalculateReservedSimpleInventory(
+    input: RecalculateReservedSimpleInventoryInput!
+  ): RecalculateReservedSimpleInventoryPayload!
+  updateSimpleInventory(
+    input: UpdateSimpleInventoryInput!
+  ): UpdateSimpleInventoryPayload!
+  addCartItems(input: AddCartItemsInput!): AddCartItemsPayload!
+  createCart(input: CreateCartInput!): CreateCartPayload!
+  reconcileCarts(input: ReconcileCartsInput!): ReconcileCartsPayload!
+  removeCartItems(input: RemoveCartItemsInput!): RemoveCartItemsPayload!
+  setEmailOnAnonymousCart(
+    input: SetEmailOnAnonymousCartInput!
+  ): SetEmailOnAnonymousCartPayload!
+  updateCartItemsQuantity(
+    input: UpdateCartItemsQuantityInput!
+  ): UpdateCartItemsQuantityPayload!
+  selectFulfillmentOptionForGroup(
+    input: SelectFulfillmentOptionForGroupInput!
+  ): SelectFulfillmentOptionForGroupPayload!
+  setShippingAddressOnCart(
+    input: SetShippingAddressOnCartInput!
+  ): SetShippingAddressOnCartPayload!
+  updateFulfillmentOptionsForGroup(
+    input: UpdateFulfillmentOptionsForGroupInput!
+  ): UpdateFulfillmentOptionsForGroupPayload!
+  addOrderFulfillmentGroup(
+    input: AddOrderFulfillmentGroupInput!
+  ): AddOrderFulfillmentGroupPayload!
+  cancelOrderItem(input: CancelOrderItemInput!): CancelOrderItemPayload!
+  createRefund(input: CreateRefundInput!): CreateRefundPayload!
+  moveOrderItems(input: MoveOrderItemsInput!): MoveOrderItemsPayload!
+  placeOrder(input: PlaceOrderInput!): PlaceOrderPayload!
+  splitOrderItem(input: SplitOrderItemInput!): SplitOrderItemPayload!
+  updateOrder(input: UpdateOrderInput!): UpdateOrderPayload!
+  updateOrderFulfillmentGroup(
+    input: UpdateOrderFulfillmentGroupInput!
+  ): UpdateOrderFulfillmentGroupPayload!
+  approveOrderPayments(
+    input: ApproveOrderPaymentsInput!
+  ): ApproveOrderPaymentsPayload!
+  captureOrderPayments(
+    input: CaptureOrderPaymentsInput!
+  ): CaptureOrderPaymentsPayload!
+  enablePaymentMethodForShop(
+    input: EnablePaymentMethodForShopInput!
+  ): EnablePaymentMethodForShopPayload!
+  createDiscountCode(input: CreateDiscountCodeInput!): CreateDiscountCodePayload
+  updateDiscountCode(input: UpdateDiscountCodeInput!): UpdateDiscountCodePayload
+  deleteDiscountCode(input: DeleteDiscountCodeInput!): DeleteDiscountCodePayload
+  applyDiscountCodeToCart(
+    input: ApplyDiscountCodeToCartInput!
+  ): ApplyDiscountCodeToCartPayload!
+  removeDiscountCodeFromCart(
+    input: RemoveDiscountCodeFromCartInput!
+  ): RemoveDiscountCodeFromCartPayload!
+  createSurcharge(input: CreateSurchargeInput!): CreateSurchargePayload!
+  deleteSurcharge(input: DeleteSurchargeInput!): DeleteSurchargePayload!
+  updateSurcharge(input: UpdateSurchargeInput!): UpdateSurchargePayload!
+  createFlatRateFulfillmentMethod(
+    input: CreateFlatRateFulfillmentMethodInput!
+  ): CreateFlatRateFulfillmentMethodPayload!
+  updateFlatRateFulfillmentMethod(
+    input: UpdateFlatRateFulfillmentMethodInput!
+  ): UpdateFlatRateFulfillmentMethodPayload!
+  deleteFlatRateFulfillmentMethod(
+    input: DeleteFlatRateFulfillmentMethodInput!
+  ): DeleteFlatRateFulfillmentMethodPayload!
+  createFlatRateFulfillmentRestriction(
+    input: CreateFlatRateFulfillmentRestrictionInput!
+  ): CreateFlatRateFulfillmentRestrictionPayload!
+  deleteFlatRateFulfillmentRestriction(
+    input: DeleteFlatRateFulfillmentRestrictionInput!
+  ): DeleteFlatRateFulfillmentRestrictionPayload!
+  updateFlatRateFulfillmentRestriction(
+    input: UpdateFlatRateFulfillmentRestrictionInput!
+  ): UpdateFlatRateFulfillmentRestrictionPayload!
+  createTaxRate(input: CreateTaxRateInput!): CreateTaxRatePayload
+  updateTaxRate(input: UpdateTaxRateInput!): UpdateTaxRatePayload
+  deleteTaxRate(input: DeleteTaxRateInput!): DeleteTaxRatePayload
+  createNavigationItem(
+    input: CreateNavigationItemInput!
+  ): CreateNavigationItemPayload
+  createNavigationTree(
+    input: CreateNavigationTreeInput!
+  ): CreateNavigationTreePayload!
+  deleteNavigationItem(
+    input: DeleteNavigationItemInput!
+  ): DeleteNavigationItemPayload
+  publishNavigationChanges(
+    input: PublishNavigationChangesInput!
+  ): PublishNavigationChangesPayload
+  updateNavigationItem(
+    input: UpdateNavigationItemInput!
+  ): UpdateNavigationItemPayload
+  updateNavigationTree(
+    input: UpdateNavigationTreeInput!
+  ): UpdateNavigationTreePayload
+  generateSitemaps(input: GenerateSitemapsInput): GenerateSitemapsPayload!
+}
+
+type NavigationItem implements Node {
+  _id: ID!
+  createdAt: DateTime!
+  data: NavigationItemData
+  draftData: NavigationItemData
+  hasUnpublishedChanges: Boolean
+  metadata: JSONObject
+  shopId: ID!
+}
+
+type NavigationItemConnection {
+  edges: [NavigationItemEdge]
+  nodes: [NavigationItem]
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type NavigationItemContent {
+  language: String!
+  value: String
+}
+
+input NavigationItemContentInput {
+  language: String!
+  value: String
+}
+
+type NavigationItemData {
+  classNames: String
+  content: [NavigationItemContent]
+  contentForLanguage: String
+  isUrlRelative: Boolean
+  shouldOpenInNewWindow: Boolean
+  url: String
+}
+
+input NavigationItemDataInput {
+  classNames: String
+  content: [NavigationItemContentInput]
+  isUrlRelative: Boolean
+  shouldOpenInNewWindow: Boolean
+  url: String
+}
+
+type NavigationItemEdge implements NodeEdge {
+  cursor: ConnectionCursor!
+  node: NavigationItem
+}
+
+input NavigationItemInput {
+  draftData: NavigationItemDataInput
+  metadata: JSONObject
+  shopId: ID!
+}
+
+enum NavigationItemSortByField {
+  _id
+  createdAt
+}
+
+type NavigationTree implements Node {
+  _id: ID!
+  draftItems: [NavigationTreeItem]
+  hasUnpublishedChanges: Boolean
+  items: [NavigationTreeItem]
+  name: String!
+  shopId: ID!
+}
+
+input NavigationTreeInput {
+  draftItems: [NavigationTreeItemInput]
+  name: String
+}
+
+type NavigationTreeItem {
+  expanded: Boolean
+  isPrivate: Boolean
+  isSecondary: Boolean
+  isVisible: Boolean
+  items: [NavigationTreeItem]
+  navigationItem: NavigationItem!
+}
+
+input NavigationTreeItemInput {
+  expanded: Boolean
+  isPrivate: Boolean
+  isSecondary: Boolean
+  isVisible: Boolean
+  items: [NavigationTreeItemInput]
+  navigationItemId: ID!
+}
+
+interface Node {
+  _id: ID!
+}
+
+interface NodeEdge {
+  cursor: ConnectionCursor!
+  node: Node
+}
+
+type Order implements Node {
+  _id: ID!
+  account: Account
+  cartId: ID
+  createdAt: DateTime!
+  displayStatus(language: String!): String!
+  email: String
+  fulfillmentGroups: [OrderFulfillmentGroup]!
+  notes: [OrderNote]!
+  payments: [Payment]
+  referenceId: String!
+  refunds: [Refund]
+  shop: Shop!
+  status: String!
+  summary: OrderSummary!
+  totalItemQuantity: Int!
+  updatedAt: DateTime!
+  surcharges: [AppliedSurcharge]!
+}
+
+type OrderConnection {
+  edges: [OrderEdge]
+  nodes: [Order]
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type OrderEdge implements NodeEdge {
+  cursor: ConnectionCursor!
+  node: Order
+}
+
+input OrderFilterInput {
+  createdAt: CreatedAtInput
+  fulfillmentStatus: [OrderFulfillmentStatus]
+  paymentStatus: [OrderPaymentStatus]
+  searchField: String
+  status: OrderStatus
+}
+
+type OrderFulfillmentGroup implements Node {
+  _id: ID!
+  data: OrderFulfillmentGroupData
+  displayStatus(language: String!): String!
+  items(
+    after: ConnectionCursor
+    before: ConnectionCursor
+    first: ConnectionLimitInt
+    last: ConnectionLimitInt
+    sortOrder: SortOrder = desc
+    sortBy: OrderFulfillmentGroupItemsSortByField = addedAt
+  ): OrderItemConnection
+  selectedFulfillmentOption: FulfillmentOption!
+  shippingLabelUrl: String
+  shop: Shop!
+  status: String!
+  summary: OrderSummary!
+  totalItemQuantity: Int!
+  tracking: String
+  trackingUrl: String
+  type: FulfillmentType!
+  taxSummary: TaxSummary
+}
+
+union OrderFulfillmentGroupData = ShippingOrderFulfillmentGroupData
+input OrderFulfillmentGroupDataInput {
+  shippingAddress: AddressInput
+}
+
+input OrderFulfillmentGroupExistingOrderInput {
+  data: OrderFulfillmentGroupDataInput
+  items: [OrderFulfillmentGroupItemInput]
+  selectedFulfillmentMethodId: ID!
+  shopId: ID!
+  totalPrice: Float
+  type: FulfillmentType!
+}
+
+input OrderFulfillmentGroupInput {
+  data: OrderFulfillmentGroupDataInput
+  items: [OrderFulfillmentGroupItemInput]!
+  selectedFulfillmentMethodId: ID!
+  shopId: ID!
+  totalPrice: Float
+  type: FulfillmentType!
+}
+
+input OrderFulfillmentGroupItemInput {
+  addedAt: DateTime
+  price: Float!
+  productConfiguration: ProductConfigurationInput!
+  quantity: Int!
+}
+
+enum OrderFulfillmentGroupItemsSortByField {
+  _id
+  addedAt
+}
+
+enum OrderFulfillmentStatus {
+  completed
+  new
+  processing
+}
+
+input OrderInput {
+  cartId: String
+  currencyCode: String!
+  email: String!
+  fulfillmentGroups: [OrderFulfillmentGroupInput]!
+  shopId: String!
+}
+
+type OrderItem implements Node {
+  _id: ID!
+  addedAt: DateTime
+  attributes: [OrderItemAttribute]
+  cancelReason: String
+  createdAt: DateTime!
+  imageURLs: ImageSizes
+  metafields: [Metafield]
+  optionTitle: String
+  parcel: ShippingParcel
+  price: Money!
+  productConfiguration: ProductConfiguration!
+  productSlug: String
+  productTags(
+    after: ConnectionCursor
+    before: ConnectionCursor
+    first: ConnectionLimitInt
+    last: ConnectionLimitInt
+    sortOrder: SortOrder = asc
+    sortBy: TagSortByField = _id
+  ): TagConnection
+  productType: String
+  productVendor: String
+  quantity: Int!
+  shop: Shop!
+  status: String!
+  subtotal: Money!
+  title: String!
+  updatedAt: DateTime!
+  variantTitle: String
+  isTaxable: Boolean!
+  tax: Money!
+  taxCode: String
+  taxableAmount: Money!
+  taxes: [CalculatedTax]!
+}
+
+type OrderItemAttribute {
+  label: String
+  value: String
+}
+
+type OrderItemConnection {
+  edges: [OrderItemEdge]
+  nodes: [OrderItem]
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type OrderItemEdge implements NodeEdge {
+  cursor: ConnectionCursor!
+  node: OrderItem
+}
+
+type OrderNote {
+  account: Account!
+  content: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+enum OrderPaymentStatus {
+  completed
+  created
+}
+
+type OrdersByAccountIdConnection {
+  edges: [OrdersByAccountIdEdge]
+  nodes: [Order]
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type OrdersByAccountIdEdge implements NodeEdge {
+  cursor: ConnectionCursor!
+  node: Order
+}
+
+enum OrdersByAccountIdSortByField {
+  _id
+  createdAt
+}
+
+enum OrdersSortByField {
+  _id
+  createdAt
+}
+
+enum OrderStatus {
+  canceled
+  completed
+  new
+  processing
+}
+
+type OrderSummary {
+  discountTotal: Money!
+  effectiveTaxRate: Rate!
+  fulfillmentTotal: Money!
+  itemTotal: Money!
+  taxTotal: Money!
+  taxableAmount: Money!
+  total: Money!
+  surchargeTotal: Money
+}
+
+type PageInfo {
+  endCursor: ConnectionCursor
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: ConnectionCursor
+}
+
+type Payment implements Node {
+  _id: ID!
+  amount: Money!
+  billingAddress: Address
+  captureErrorCode: String
+  captureErrorMessage: String
+  cardBrand: String
+  createdAt: DateTime!
+  data: PaymentData
+  displayName: String!
+  isAuthorizationCanceled: Boolean!
+  isCaptured: Boolean!
+  method: PaymentMethod!
+  mode: String
+  processor: String
+  refunds: [Refund]
+  riskLevel: RiskLevel
+  status: PaymentStatus!
+  transactionId: String
+}
+
+union PaymentData = FakeData | StripeCardPaymentData | ExampleIOUPaymentData
+input PaymentInput {
+  amount: Float!
+  billingAddress: AddressInput
+  data: JSONObject
+  method: PaymentMethodName!
+}
+
+type PaymentMethod {
+  canRefund: Boolean!
+  data: PaymentMethodData
+  displayName: String!
+  isEnabled: Boolean!
+  name: String!
+  pluginName: String!
+}
+
+union PaymentMethodData = FakeData | ExampleIOUPaymentMethodData
+enum PaymentMethodName {
+  none
+  stripe_card
+  iou_example
+}
+
+enum PaymentStatus {
+  adjustments
+  approved
+  canceled
+  completed
+  created
+  error
+  partialRefund
+  refunded
+}
+
+input PlaceOrderInput {
+  clientMutationId: String
+  order: OrderInput!
+  payments: [PaymentInput]
+}
+
+type PlaceOrderPayload {
+  clientMutationId: String
+  orders: [Order]!
+  token: String
+}
+
+type Plugin {
+  name: String!
+  version: String
+}
+
+type Product {
+  _id: ID!
+  createdAt: DateTime!
+  currentProductHash: String
+  description: String
+  isDeleted: Boolean!
+  isVisible: Boolean!
+  media(shouldIncludeVariantMedia: Boolean = true): [ImageInfo]
+  metaDescription: String
+  metafields: [Metafield]!
+  originCountry: String
+  pageTitle: String
+  productType: String
+  publishedAt: DateTime
+  publishedProductHash: String
+  shop: Shop!
+  shouldAppearInSitemap: Boolean
+  slug: String
+  socialMetadata: [SocialMetadata]
+  supportedFulfillmentTypes: [FulfillmentType]!
+  tagIds: [ID]
+  tags(
+    after: ConnectionCursor
+    before: ConnectionCursor
+    first: ConnectionLimitInt
+    last: ConnectionLimitInt
+    offset: Int
+    sortOrder: SortOrder = asc
+    sortBy: TagSortByField = _id
+  ): TagConnection
+  title: String
+  updatedAt: DateTime
+  variants(
+    shouldIncludeHidden: Boolean = true
+    shouldIncludeArchived: Boolean = false
+  ): [ProductVariant]!
+  vendor: String
+  price: ProductPriceRange @deprecated(reason: "Use `pricing`")
+  pricing: ProductPricingInfo!
+}
+
+type ProductConfiguration {
+  productId: ID!
+  productVariantId: ID!
+}
+
+input ProductConfigurationInput {
+  productId: ID!
+  productVariantId: ID!
+}
+
+type ProductConnection {
+  edges: [ProductEdge]
+  nodes: [Product]
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type ProductEdge {
+  cursor: ConnectionCursor!
+  node: Product
+}
+
+input ProductInput {
+  _id: String
+  description: String
+  facebookMsg: String
+  googleplusMsg: String
+  isDeleted: Boolean
+  isVisible: Boolean
+  metaDescription: String
+  metafields: [MetafieldInput]
+  originCountry: String
+  pageTitle: String
+  pinterestMsg: String
+  productType: String
+  shouldAppearInSitemap: Boolean
+  slug: String
+  supportedFulfillmentTypes: [FulfillmentType]
+  tagIds: [ID]
+  title: String
+  twitterMsg: String
+  vendor: String
+}
+
+type ProductPriceRange {
+  max: Float
+  min: Float
+  range: String
+}
+
+type ProductPricingInfo {
+  compareAtPrice: Money
+  currency: Currency!
+  currencyExchangePricing(
+    currencyCode: String!
+  ): CurrencyExchangeProductPricingInfo
+  displayPrice: String!
+  maxPrice: Float!
+  minPrice: Float!
+  price: Float
+}
+
+enum ProductSortByField {
+  _id
+  createdAt
+  title
+  updatedAt
+}
+
+input ProductTagsOperationInput {
+  clientMutationId: String
+  productIds: [ID]
+  shopId: ID!
+  tagIds: [ID]
+}
+
+type ProductTagsOperationPayload {
+  clientMutationId: String
+  foundCount: Int
+  notFoundCount: Int
+  updatedCount: Int
+  writeErrors: [WriteError]
+}
+
+type ProductVariant {
+  _id: ID!
+  attributeLabel: String
+  barcode: String
+  createdAt: DateTime
+  height: Float
+  index: Int
+  isDeleted: Boolean!
+  isVisible: Boolean!
+  length: Float
+  media: [ImageInfo]
+  metafields: [Metafield]!
+  minOrderQuantity: Int
+  optionTitle: String
+  options(
+    shouldIncludeHidden: Boolean = true
+    shouldIncludeArchived: Boolean = false
+  ): [ProductVariant]!
+  originCountry: String
+  shop: Shop!
+  sku: String
+  title: String
+  updatedAt: DateTime
+  weight: Float
+  width: Float
+  compareAtPrice: Float @deprecated(reason: "Use `pricing`")
+  price: Float @deprecated(reason: "Use `pricing`")
+  pricing: ProductPricingInfo!
+  isTaxable: Boolean
+  taxCode: String
+  taxDescription: String
+}
+
+input ProductVariantInput {
+  _id: String
+  attributeLabel: String
+  barcode: String
+  height: Float
+  index: Int
+  isDeleted: Boolean
+  isVisible: Boolean
+  length: Float
+  metafields: [MetafieldInput]
+  minOrderQuantity: Int
+  optionTitle: String
+  originCountry: String
+  sku: String
+  title: String
+  weight: Float
+  width: Float
+  compareAtPrice: Float
+  price: Float
+  isTaxable: Boolean
+  taxCode: String
+  taxDescription: String
+}
+
+input ProductVariantPricesInput {
+  compareAtPrice: Float
+  price: Float
+}
+
+input PublishNavigationChangesInput {
+  clientMutationId: String
+  id: ID!
+  shopId: ID!
+}
+
+type PublishNavigationChangesPayload {
+  clientMutationId: String
+  navigationTree: NavigationTree
+}
+
+type Query {
+  ping: String!
+  primaryShop: Shop
+  primaryShopId: ID
+  shop(id: ID!): Shop
+  shopBySlug(slug: String!): Shop
+  globalSettings: GlobalSettings!
+  shopSettings(shopId: ID!): ShopSettings!
+  addressValidation(
+    address: AddressInput!
+    shopId: ID!
+  ): AddressValidationResults!
+  addressValidationServices: [AddressValidationService]!
+  addressValidationRules(
+    after: ConnectionCursor
+    before: ConnectionCursor
+    first: ConnectionLimitInt
+    last: ConnectionLimitInt
+    offset: Int
+    serviceNames: [String]
+    shopId: ID!
+    sortOrder: SortOrder = asc
+    sortBy: AddressValidationRuleSortByField = createdAt
+  ): AddressValidationRuleConnection!
+  systemInformation(shopId: ID!): SystemInformation!
+  emailTemplates(
+    shopId: ID!
+    after: ConnectionCursor
+    before: ConnectionCursor
+    first: ConnectionLimitInt
+    last: ConnectionLimitInt
+    offset: Int
+  ): TemplateConnection
+  account(id: ID!): Account
+  accounts(
+    groupIds: [ID]
+    after: ConnectionCursor
+    before: ConnectionCursor
+    first: ConnectionLimitInt
+    last: ConnectionLimitInt
+    offset: Int
+    sortOrder: SortOrder = asc
+    sortBy: AccountSortByField = createdAt
+  ): AccountConnection!
+  viewer: Account
+  group(id: ID!): Group
+  groups(
+    shopId: ID!
+    after: ConnectionCursor
+    before: ConnectionCursor
+    first: ConnectionLimitInt
+    last: ConnectionLimitInt
+    sortOrder: SortOrder = asc
+    sortBy: GroupSortByField = createdAt
+  ): GroupConnection
+  roles(
+    shopId: ID!
+    after: ConnectionCursor
+    before: ConnectionCursor
+    first: ConnectionLimitInt
+    last: ConnectionLimitInt
+    sortOrder: SortOrder = asc
+    sortBy: RoleSortByField = name
+  ): RoleConnection
+  product(
+    productId: ID!
+    shopId: ID!
+  ): Product
+  products(
+    isArchived: Boolean
+    isVisible: Boolean
+    metafieldKey: String
+    metafieldValue: String
+    priceMax: Float
+    priceMin: Float
+    productIds: [ID]
+    query: String
+    shopIds: [ID]!
+    tagIds: [ID]
+    after: ConnectionCursor
+    before: ConnectionCursor
+    first: ConnectionLimitInt
+    last: ConnectionLimitInt
+    offset: Int
+    sortOrder: SortOrder = desc
+    sortBy: ProductSortByField = createdAt
+  ): ProductConnection
+  catalogItems(
+    shopIds: [ID]!
+    tagIds: [ID]
+    booleanFilters: [CatalogBooleanFilter]
+    after: ConnectionCursor
+    before: ConnectionCursor
+    first: ConnectionLimitInt
+    last: ConnectionLimitInt
+    offset: Int
+    sortOrder: SortOrder = desc
+    sortByPriceCurrencyCode: String
+    sortBy: CatalogItemSortByField = updatedAt
+  ): CatalogItemConnection
+  catalogItemProduct(
+    shopId: ID
+    slugOrId: String
+  ): CatalogItemProduct
+  productsByTagId(
+    shopId: ID!
+    tagId: ID!
+    after: ConnectionCursor
+    before: ConnectionCursor
+    first: ConnectionLimitInt
+    last: ConnectionLimitInt
+  ): TagProductConnection!
+  tag(
+    slugOrId: String!
+    shopId: ID!
+    shouldIncludeInvisible: Boolean = false
+  ): Tag
+  tags(
+    shopId: ID!
+    filter: String
+    excludedTagIds: [ID]
+    isTopLevel: Boolean
+    shouldIncludeDeleted: Boolean = false
+    shouldIncludeInvisible: Boolean = false
+    after: ConnectionCursor
+    before: ConnectionCursor
+    first: ConnectionLimitInt
+    last: ConnectionLimitInt
+    sortOrder: SortOrder = asc
+    sortBy: TagSortByField = position
+  ): TagConnection
+  simpleInventory(
+    shopId: ID!
+    productConfiguration: ProductConfigurationInput!
+  ): SimpleInventoryInfo
+  anonymousCartByCartId(
+    cartId: ID!
+    cartToken: String!
+  ): Cart
+  accountCartByAccountId(
+    accountId: ID!
+    shopId: ID!
+  ): Cart
+  orderById(
+    id: ID!
+    shopId: ID!
+    token: String
+  ): Order
+  orders(
+    filters: OrderFilterInput
+    shopIds: [ID]
+    after: ConnectionCursor
+    before: ConnectionCursor
+    first: ConnectionLimitInt
+    last: ConnectionLimitInt
+    offset: Int
+    sortOrder: SortOrder = desc
+    sortBy: OrdersSortByField = createdAt
+  ): OrderConnection!
+  ordersByAccountId(
+    accountId: ID!
+    orderStatus: [String]
+    shopIds: [ID]!
+    after: ConnectionCursor
+    before: ConnectionCursor
+    first: ConnectionLimitInt
+    last: ConnectionLimitInt
+    sortOrder: SortOrder = desc
+    sortBy: OrdersByAccountIdSortByField = createdAt
+  ): OrdersByAccountIdConnection!
+  orderByReferenceId(
+    id: ID!
+    shopId: ID!
+    token: String
+  ): Order
+  refunds(
+    orderId: ID!
+    shopId: ID!
+    token: String
+  ): [Refund]
+  refundsByPaymentId(
+    orderId: ID!
+    paymentId: ID!
+    shopId: ID!
+    token: String
+  ): [Refund]
+  availablePaymentMethods(shopId: ID!): [PaymentMethod]!
+  paymentMethods(shopId: ID!): [PaymentMethod]!
+  discountCodes(
+    shopId: ID!
+    filters: DiscountCodeFilterInput
+    after: ConnectionCursor
+    before: ConnectionCursor
+    first: ConnectionLimitInt
+    last: ConnectionLimitInt
+    offset: Int
+  ): DiscountCodeConnection
+  surcharges(
+    shopId: ID!
+    after: ConnectionCursor
+    before: ConnectionCursor
+    first: ConnectionLimitInt
+    last: ConnectionLimitInt
+    sortOrder: SortOrder = desc
+    sortBy: SurchargeSortByField = createdAt
+  ): SurchargeConnection!
+  surchargeById(
+    shopId: ID!
+    surchargeId: ID!
+  ): Surcharge
+  flatRateFulfillmentMethod(
+    methodId: ID!
+    shopId: ID!
+  ): FlatRateFulfillmentMethod!
+  flatRateFulfillmentMethods(
+    shopId: ID!
+    after: ConnectionCursor
+    before: ConnectionCursor
+    first: ConnectionLimitInt
+    last: ConnectionLimitInt
+    offset: Int
+  ): FlatRateFulfillmentMethodConnection!
+  getFlatRateFulfillmentRestrictions(
+    shopId: ID!
+    after: ConnectionCursor
+    before: ConnectionCursor
+    first: ConnectionLimitInt
+    last: ConnectionLimitInt
+    sortOrder: SortOrder = desc
+    sortBy: FlatRateFulfillmentRestrictionSortByField = createdAt
+  ): FlatRateFulfillmentRestrictionConnection!
+  getFlatRateFulfillmentRestriction(
+    restrictionId: ID!
+    shopId: ID!
+  ): FlatRateFulfillmentRestriction
+  taxCodes(shopId: ID!): [TaxCode]!
+  taxServices(shopId: ID!): [TaxService]!
+  taxRates(
+    shopId: ID!
+    after: ConnectionCursor
+    before: ConnectionCursor
+    first: ConnectionLimitInt
+    last: ConnectionLimitInt
+    offset: Int
+  ): TaxRateConnection
+  navigationTreeById(
+    id: ID!
+    language: String!
+    shopId: ID!
+    shouldIncludeSecondary: Boolean = false
+  ): NavigationTree
+  navigationItemsByShopId(
+    shopId: ID!
+    after: ConnectionCursor
+    before: ConnectionCursor
+    first: ConnectionLimitInt
+    last: ConnectionLimitInt
+    offset: Int
+    sortOrder: SortOrder = desc
+    sortBy: NavigationItemSortByField = createdAt
+  ): NavigationItemConnection
+  sitemap(
+    handle: String!
+    shopUrl: String!
+  ): Sitemap
+}
+
+type Rate {
+  amount: Float!
+  displayPercent: String!
+  percent: Float!
+}
+
+input RecalculateReservedSimpleInventoryInput {
+  productConfiguration: ProductConfigurationInput!
+  shopId: ID!
+}
+
+type RecalculateReservedSimpleInventoryPayload {
+  clientMutationId: String
+  inventoryInfo: SimpleInventoryInfo!
+}
+
+input ReconcileCartsInput {
+  anonymousCartId: ID!
+  cartToken: String!
+  clientMutationId: String
+  mode: CartReconciliationMode
+  shopId: ID!
+}
+
+type ReconcileCartsPayload {
+  cart: Cart!
+  clientMutationId: String
+}
+
+type Refund implements Node {
+  _id: ID!
+  amount: Money!
+  createdAt: DateTime!
+  paymentDisplayName: String!
+  paymentId: ID!
+  reason: String
+}
+
+input RemoveAccountAddressBookEntryInput {
+  accountId: ID!
+  addressId: ID!
+  clientMutationId: String
+}
+
+type RemoveAccountAddressBookEntryPayload {
+  address: Address
+  clientMutationId: String
+}
+
+input RemoveAccountEmailRecordInput {
+  accountId: ID
+  clientMutationId: String
+  email: Email!
+}
+
+type RemoveAccountEmailRecordPayload {
+  account: Account
+  clientMutationId: String
+}
+
+input RemoveAccountFromGroupInput {
+  accountId: ID!
+  clientMutationId: String
+  groupId: ID!
+}
+
+type RemoveAccountFromGroupPayload {
+  clientMutationId: String
+  group: Group!
+}
+
+input RemoveAccountGroupInput {
+  clientMutationId: String
+  groupId: ID!
+  shopId: ID
+}
+
+type RemoveAccountGroupPayload {
+  clientMutationId: String
+  group: Group
+}
+
+input RemoveCartItemsInput {
+  cartId: ID!
+  cartItemIds: [ID]!
+  cartToken: String
+  clientMutationId: String
+}
+
+type RemoveCartItemsPayload {
+  cart: Cart!
+  clientMutationId: String
+}
+
+input RemoveDiscountCodeFromCartInput {
+  cartId: ID!
+  discountId: ID!
+  shopId: ID!
+  token: String
+}
+
+type RemoveDiscountCodeFromCartPayload {
+  cart: Cart!
+  clientMutationId: String
+}
+
+input RemoveTagInput {
+  clientMutationId: String
+  id: ID!
+  shopId: ID!
+}
+
+type RemoveTagPayload {
+  clientMutationId: String
+  tag: Tag!
+}
+
+enum RestrictionTypeEnum {
+  allow
+  deny
+}
+
+input RetryFailedEmailInput {
+  clientMutationId: String
+  jobId: ID!
+  shopId: ID!
+}
+
+type RetryFailedEmailPayload {
+  clientMutationId: String
+  emailSent: Boolean!
+}
+
+enum RiskLevel {
+  elevated
+  highest
+  normal
+}
+
+type Role implements Node {
+  _id: ID!
+  name: String!
+}
+
+type RoleConnection {
+  edges: [RoleEdge]
+  nodes: [Role]
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type RoleEdge implements NodeEdge {
+  cursor: ConnectionCursor!
+  node: Role
+}
+
+enum RoleSortByField {
+  _id
+  name
+}
+
+input SelectFulfillmentOptionForGroupInput {
+  cartId: ID!
+  cartToken: String
+  clientMutationId: String
+  fulfillmentGroupId: ID!
+  fulfillmentMethodId: ID!
+}
+
+type SelectFulfillmentOptionForGroupPayload {
+  cart: Cart!
+  clientMutationId: String
+}
+
+input SendResetAccountPasswordEmailInput {
+  clientMutationId: String
+  email: String!
+}
+
+type SendResetAccountPasswordEmailPayload {
+  clientMutationId: String
+  email: String!
+}
+
+input SetAccountDefaultEmailInput {
+  accountId: ID
+  clientMutationId: String
+  email: Email!
+}
+
+type SetAccountDefaultEmailPayload {
+  account: Account
+  clientMutationId: String
+}
+
+input SetEmailOnAnonymousCartInput {
+  cartId: ID!
+  cartToken: String!
+  clientMutationId: String
+  email: String!
+}
+
+type SetEmailOnAnonymousCartPayload {
+  cart: Cart!
+  clientMutationId: String
+}
+
+input SetShippingAddressOnCartInput {
+  address: AddressInput!
+  addressId: String
+  cartId: ID!
+  cartToken: String
+  clientMutationId: String
+}
+
+type SetShippingAddressOnCartPayload {
+  cart: Cart!
+  clientMutationId: String
+}
+
+input SetTagHeroMediaInput {
+  clientMutationId: String
+  fileRecord: JSONObject
+  id: ID!
+  shopId: ID!
+}
+
+type SetTagHeroMediaPayload {
+  clientMutationId: String
+  tag: Tag!
+}
+
+type ShippingOrderFulfillmentGroupData {
+  shippingAddress: Address!
+}
+
+type ShippingParcel {
+  containers: String
+  distanceUnit: DistanceUnit
+  height: Float
+  length: Float
+  massUnit: MassUnit
+  weight: Float
+  width: Float
+}
+
+type Shop implements Node {
+  _id: ID!
+  addressBook: [Address]
+  allowGuestCheckout: Boolean
+  baseUOL: String
+  baseUOM: String
+  brandAssets: ShopBrandAssets
+  currency: Currency!
+  defaultParcelSize: ShopParcelSize
+  description: String
+  emails: [EmailRecord]
+  keywords: String
+  language: String!
+  name: String!
+  shopLogoUrls: ShopLogoUrls
+  slug: String
+  storefrontUrls: StorefrontUrls
+  timezone: String
+  unitsOfLength: [UnitOfLength]
+  unitsOfMeasure: [UnitOfMeasure]
+  groups(
+    after: ConnectionCursor
+    before: ConnectionCursor
+    first: ConnectionLimitInt
+    last: ConnectionLimitInt
+    sortOrder: SortOrder = asc
+    sortBy: GroupSortByField = createdAt
+  ): GroupConnection
+  roles(
+    after: ConnectionCursor
+    before: ConnectionCursor
+    first: ConnectionLimitInt
+    last: ConnectionLimitInt
+    sortOrder: SortOrder = asc
+    sortBy: RoleSortByField = name
+  ): RoleConnection
+  tags(
+    isTopLevel: Boolean
+    shouldIncludeDeleted: Boolean = false
+    after: ConnectionCursor
+    before: ConnectionCursor
+    first: ConnectionLimitInt
+    last: ConnectionLimitInt
+    sortOrder: SortOrder = asc
+    sortBy: TagSortByField = position
+  ): TagConnection
+  defaultNavigationTree(
+    language: String!
+    shouldIncludeSecondary: Boolean = false
+  ): NavigationTree
+  defaultNavigationTreeId: String
+}
+
+type ShopBrandAssets {
+  navbarBrandImage: ImageSizes
+  navbarBrandImageId: String
+}
+
+type ShopLogoUrls {
+  primaryShopLogoUrl: String
+}
+
+input ShopLogoUrlsInput {
+  primaryShopLogoUrl: String
+}
+
+type ShopParcelSize {
+  height: Float
+  length: Float
+  weight: Float
+  width: Float
+}
+
+input ShopParcelSizeInput {
+  height: Float
+  length: Float
+  weight: Float
+  width: Float
+}
+
+type ShopSettings {
+  doNotUse: String
+  canSellVariantWithoutInventory: Boolean!
+  isShippingRatesFulfillmentEnabled: Boolean
+  defaultTaxCode: String
+  fallbackTaxServiceName: String
+  primaryTaxServiceName: String
+  shouldNavigationTreeItemsBeAdminOnly: Boolean!
+  shouldNavigationTreeItemsBePubliclyVisible: Boolean!
+  shouldNavigationTreeItemsBeSecondaryNavOnly: Boolean!
+  sitemapRefreshPeriod: String!
+}
+
+input ShopSettingsUpdates {
+  doNotUse: String
+  canSellVariantWithoutInventory: Boolean
+  isShippingRatesFulfillmentEnabled: Boolean
+  defaultTaxCode: String
+  fallbackTaxServiceName: String
+  primaryTaxServiceName: String
+  shouldNavigationTreeItemsBeAdminOnly: Boolean
+  shouldNavigationTreeItemsBePubliclyVisible: Boolean
+  shouldNavigationTreeItemsBeSecondaryNavOnly: Boolean
+  sitemapRefreshPeriod: String
+}
+
+type SimpleInventoryInfo {
+  canBackorder: Boolean
+  inventoryInStock: Int
+  inventoryReserved: Int
+  isEnabled: Boolean
+  lowInventoryWarningThreshold: Int
+  productConfiguration: ProductConfiguration!
+}
+
+type Sitemap {
+  createdAt: Date!
+  handle: String!
+  shopId: String!
+  xml: String!
+}
+
+type SocialMetadata {
+  message: String
+  service: SocialNetwork
+}
+
+enum SocialNetwork {
+  facebook
+  googleplus
+  pinterest
+  twitter
+}
+
+enum SortOrder {
+  asc
+  desc
+}
+
+input SplitOrderItemInput {
+  clientMutationId: String
+  itemId: ID!
+  newItemQuantity: Int!
+  orderId: ID!
+}
+
+type SplitOrderItemPayload {
+  clientMutationId: String
+  newItemId: ID!
+  order: Order!
+}
+
+type StorefrontUrls {
+  storefrontAccountProfileUrl: String
+  storefrontHomeUrl: String
+  storefrontLoginUrl: String
+  storefrontOrderUrl: String
+  storefrontOrdersUrl: String
+}
+
+input StorefrontUrlsInput {
+  storefrontAccountProfileUrl: String
+  storefrontHomeUrl: String
+  storefrontLoginUrl: String
+  storefrontOrderUrl: String
+  storefrontOrdersUrl: String
+}
+
+type StripeCardPaymentData {
+  chargeId: String!
+  customerId: String
+}
+
+type Subscription {
+  tick: Int!
+}
+
+type SuggestedAddress {
+  address1: String!
+  address2: String
+  city: String!
+  country: String!
+  postal: String!
+  region: String!
+}
+
+type Surcharge implements Node {
+  _id: ID!
+  amount: Money!
+  attributes: [SurchargeAttributeRestrictions]
+  createdAt: DateTime!
+  destination: SurchargeDestinationRestrictions
+  message(language: String!): String!
+  messagesByLanguage: [SurchargeMessagesByLanguage]
+  methodIds: [ID]
+  shopId: ID!
+  type: SurchargeTypeEnum!
+  updatedAt: DateTime
+}
+
+type SurchargeAttributeRestrictions {
+  operator: String
+  property: String
+  propertyType: SurchargePropertyType
+  value: String
+}
+
+input SurchargeAttributeRestrictionsInput {
+  operator: String
+  property: String
+  propertyType: SurchargePropertyType
+  value: String
+}
+
+type SurchargeConnection {
+  edges: [SurchargeEdge]
+  nodes: [Surcharge]
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type SurchargeDestinationRestrictions {
+  country: [String]
+  postal: [String]
+  region: [String]
+}
+
+input SurchargeDestinationRestrictionsInput {
+  country: [String]
+  postal: [String]
+  region: [String]
+}
+
+type SurchargeEdge {
+  cursor: ConnectionCursor!
+  node: Surcharge
+}
+
+input SurchargeInput {
+  amount: Float!
+  attributes: [SurchargeAttributeRestrictionsInput]
+  destination: SurchargeDestinationRestrictionsInput
+  messagesByLanguage: [MessagesByLanguageInput]!
+  methodIds: [ID]
+  type: SurchargeTypeEnum!
+}
+
+type SurchargeMessagesByLanguage {
+  content: String!
+  language: String!
+}
+
+enum SurchargePropertyType {
+  bool
+  float
+  int
+  string
+}
+
+enum SurchargeSortByField {
+  createdAt
+}
+
+enum SurchargeTypeEnum {
+  surcharge
+}
+
+type SystemInformation {
+  apiVersion: String!
+  mongoVersion: DatabaseInformation!
+  plugins: [Plugin]
+}
+
+type Tag implements Node, Deletable {
+  _id: ID!
+  createdAt: DateTime!
+  displayTitle: String
+  featuredProductIds: [ID]
+  heroMediaUrl: String
+  isDeleted: Boolean!
+  isTopLevel: Boolean!
+  isVisible: Boolean!
+  metafields: [Metafield]
+  name: String!
+  position: Int
+  shop: Shop!
+  slug: String
+  subTagIds: [ID]!
+  updatedAt: DateTime!
+  subTags(
+    after: ConnectionCursor
+    before: ConnectionCursor
+    first: ConnectionLimitInt
+    last: ConnectionLimitInt
+    sortOrder: SortOrder = asc
+    sortBy: TagSortByField = position
+  ): TagConnection
+}
+
+type TagConnection {
+  edges: [TagEdge]
+  nodes: [Tag]
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type TagEdge implements NodeEdge {
+  cursor: ConnectionCursor!
+  node: Tag
+}
+
+type TagProduct {
+  _id: ID!
+  createdAt: DateTime!
+  position: Int
+  title: String
+}
+
+type TagProductConnection {
+  edges: [TagProductEdge]
+  nodes: [TagProduct]
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type TagProductEdge {
+  cursor: ConnectionCursor!
+  node: TagProduct
+}
+
+enum TagSortByField {
+  _id
+  createdAt
+  name
+  position
+  updatedAt
+}
+
+type TaxCode {
+  code: String!
+  label: String!
+}
+
+type TaxRate {
+  _id: ID!
+  country: String
+  postal: String
+  rate: Float!
+  region: String
+  shop: Shop!
+  sourcing: TaxSource!
+  taxCode: String
+}
+
+type TaxRateConnection {
+  edges: [TaxRateEdge]
+  nodes: [TaxRate]
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type TaxRateEdge {
+  cursor: ConnectionCursor!
+  node: TaxRate
+}
+
+type TaxService {
+  displayName: String!
+  name: String!
+  pluginName: String!
+}
+
+enum TaxSource {
+  destination
+  origin
+}
+
+type TaxSummary {
+  calculatedAt: DateTime!
+  calculatedByTaxServiceName: String
+  referenceId: String
+  tax: Money!
+  taxableAmount: Money!
+  taxes: [CalculatedTax]!
+}
+
+type Template implements Node {
+  _id: ID!
+  language: String
+  name: String
+  shopId: ID!
+  subject: String
+  template: String
+  title: String
+}
+
+type TemplateConnection {
+  edges: [TemplateEdge]
+  nodes: [Template]
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type TemplateEdge {
+  cursor: ConnectionCursor!
+  node: Template
+}
+
+type UnitOfLength {
+  default: Boolean
+  label: String
+  uol: String
+}
+
+type UnitOfMeasure {
+  default: Boolean
+  label: String
+  uom: String
+}
+
+input UpdateAccountAddressBookEntryInput {
+  accountId: ID!
+  addressId: ID!
+  clientMutationId: String
+  type: AddressType
+  updates: AddressInput!
+}
+
+type UpdateAccountAddressBookEntryPayload {
+  address: Address
+  clientMutationId: String
+}
+
+input UpdateAccountGroupInput {
+  clientMutationId: String
+  group: UpdateGroupInput!
+  groupId: ID!
+  shopId: ID
+}
+
+type UpdateAccountGroupPayload {
+  clientMutationId: String
+  group: Group
+}
+
+input UpdateAccountInput {
+  accountId: ID
+  bio: String
+  clientMutationId: String
+  currencyCode: String
+  firstName: String
+  language: String
+  lastName: String
+  name: String
+  note: String
+  picture: String
+  username: String
+}
+
+type UpdateAccountPayload {
+  account: Account!
+  clientMutationId: String
+}
+
+input UpdateAddressValidationRuleInput {
+  clientMutationId: String
+  countryCodes: [String]
+  ruleId: ID!
+  serviceName: String!
+  shopId: ID!
+}
+
+type UpdateAddressValidationRulePayload {
+  addressValidationRule: AddressValidationRule!
+  clientMutationId: String
+}
+
+input UpdateCartItemInput {
+  cartItemId: ID!
+  quantity: Int!
+}
+
+input UpdateCartItemsQuantityInput {
+  cartId: ID!
+  cartToken: String
+  clientMutationId: String
+  items: [UpdateCartItemInput]!
+}
+
+type UpdateCartItemsQuantityPayload {
+  cart: Cart!
+  clientMutationId: String
+}
+
+input UpdateDiscountCodeInput {
+  clientMutationId: String
+  discountCode: DiscountCodeInput
+  discountCodeId: ID!
+  shopId: ID!
+}
+
+type UpdateDiscountCodePayload {
+  clientMutationId: String
+  discountCode: DiscountCode
+}
+
+input UpdateFlatRateFulfillmentMethodInput {
+  clientMutationId: String
+  method: FlatRateFulfillmentMethodInput!
+  methodId: ID!
+  shopId: ID!
+}
+
+type UpdateFlatRateFulfillmentMethodPayload {
+  clientMutationId: String
+  method: FlatRateFulfillmentMethod!
+}
+
+input UpdateFlatRateFulfillmentRestrictionInput {
+  clientMutationId: String
+  restriction: FlatRateFulfillmentRestrictionInput!
+  restrictionId: ID!
+  shopId: ID!
+}
+
+type UpdateFlatRateFulfillmentRestrictionPayload {
+  clientMutationId: String
+  restriction: FlatRateFulfillmentRestriction!
+}
+
+input UpdateFulfillmentOptionsForGroupInput {
+  cartId: ID!
+  cartToken: String
+  clientMutationId: String
+  fulfillmentGroupId: ID!
+}
+
+type UpdateFulfillmentOptionsForGroupPayload {
+  cart: Cart!
+  clientMutationId: String
+}
+
+input UpdateGlobalSettingsInput {
+  clientMutationId: String
+  settingsUpdates: GlobalSettingsUpdates!
+}
+
+type UpdateGlobalSettingsPayload {
+  clientMutationId: String
+  globalSettings: GlobalSettings!
+}
+
+input UpdateGroupInput {
+  description: String
+  name: String
+  slug: String
+  permissions: [String]
+}
+
+input UpdateMediaRecordPriorityInput {
+  clientMutationId: String
+  mediaRecordId: ID!
+  priority: Int!
+  shopId: ID!
+}
+
+type UpdateMediaRecordPriorityPayload {
+  clientMutationId: String
+  mediaRecord: MediaRecord!
+}
+
+input UpdateNavigationItemInput {
+  clientMutationId: String
+  id: ID!
+  navigationItem: NavigationItemInput!
+  shopId: ID!
+}
+
+type UpdateNavigationItemPayload {
+  clientMutationId: String
+  navigationItem: NavigationItem
+}
+
+input UpdateNavigationTreeInput {
+  clientMutationId: String
+  id: ID!
+  navigationTree: NavigationTreeInput!
+  shopId: ID!
+}
+
+type UpdateNavigationTreePayload {
+  clientMutationId: String
+  navigationTree: NavigationTree
+}
+
+input UpdateOrderFulfillmentGroupInput {
+  clientMutationId: String
+  orderFulfillmentGroupId: ID!
+  orderId: ID!
+  status: String
+  tracking: String
+  trackingUrl: String
+}
+
+type UpdateOrderFulfillmentGroupPayload {
+  clientMutationId: String
+  order: Order!
+}
+
+input UpdateOrderInput {
+  clientMutationId: String
+  email: String
+  orderId: ID!
+  status: String
+}
+
+type UpdateOrderPayload {
+  clientMutationId: String
+  order: Order!
+}
+
+input UpdateProductInput {
+  product: ProductInput!
+  productId: ID!
+  shopId: ID!
+}
+
+type UpdateProductPayload {
+  clientMutationId: String
+  product: Product!
+}
+
+input UpdateProductsVisibilityInput {
+  isVisible: Boolean!
+  productIds: [ID]!
+  shopId: ID!
+}
+
+type UpdateProductsVisibilityPayload {
+  clientMutationId: String
+  updatedCount: Int
+}
+
+input UpdateProductVariantInput {
+  shopId: ID!
+  variant: ProductVariantInput!
+  variantId: ID!
+}
+
+type UpdateProductVariantPayload {
+  clientMutationId: String
+  variant: ProductVariant!
+}
+
+input UpdateProductVariantPricesInput {
+  prices: ProductVariantPricesInput!
+  shopId: ID!
+  variantId: ID!
+}
+
+type UpdateProductVariantPricesPayload {
+  clientMutationId: String
+  variant: ProductVariant!
+}
+
+input UpdateShopInput {
+  addressBook: [AddressInput]
+  allowGuestCheckout: Boolean
+  baseUOL: String
+  baseUOM: String
+  brandAssets: ID
+  clientMutationId: String
+  currency: String
+  defaultParcelSize: ShopParcelSizeInput
+  description: String
+  emails: [EmailRecordInput]
+  keywords: String
+  language: String
+  name: String
+  shopId: ID!
+  shopLogoUrls: ShopLogoUrlsInput
+  slug: String
+  storefrontUrls: StorefrontUrlsInput
+  timezone: String
+}
+
+type UpdateShopPayload {
+  clientMutationId: String
+  shop: Shop!
+}
+
+input UpdateShopSettingsInput {
+  clientMutationId: String
+  settingsUpdates: ShopSettingsUpdates!
+  shopId: ID!
+}
+
+type UpdateShopSettingsPayload {
+  clientMutationId: String
+  shopSettings: ShopSettings!
+}
+
+input UpdateSimpleInventoryInput {
+  canBackorder: Boolean
+  clientMutationId: String
+  inventoryInStock: Int
+  isEnabled: Boolean
+  lowInventoryWarningThreshold: Int
+  productConfiguration: ProductConfigurationInput!
+  shopId: ID!
+}
+
+type UpdateSimpleInventoryPayload {
+  clientMutationId: String
+  inventoryInfo: SimpleInventoryInfo!
+}
+
+input UpdateSurchargeInput {
+  clientMutationId: String
+  shopId: ID!
+  surcharge: SurchargeInput!
+  surchargeId: ID!
+}
+
+type UpdateSurchargePayload {
+  clientMutationId: String
+  surcharge: Surcharge!
+}
+
+input UpdateTagInput {
+  clientMutationId: String
+  displayTitle: String
+  featuredProductIds: [ID]
+  heroMediaUrl: String
+  id: ID!
+  isVisible: Boolean!
+  metafields: [MetafieldInput]
+  name: String!
+  shopId: ID!
+  slug: String
+}
+
+type UpdateTagPayload {
+  clientMutationId: String
+  tag: Tag!
+}
+
+input UpdateTaxRateInput {
+  clientMutationId: String
+  country: String
+  postal: String
+  rate: Float!
+  region: String
+  shopId: ID!
+  sourcing: TaxSource
+  taxCode: String
+  taxRateId: ID!
+}
+
+type UpdateTaxRatePayload {
+  clientMutationId: String
+  taxRate: TaxRate!
+}
+
+input UpdateTemplateInput {
+  clientMutationId: String
+  id: ID!
+  shopId: ID!
+  subject: String
+  template: String
+  title: String
+}
+
+type UpdateTemplatePayload {
+  clientMutationId: String
+  template: Template!
+}
+
+input VerifySMTPEmailSettingsInput {
+  shopId: ID!
+}
+
+type VerifySMTPEmailSettingsInputPayload {
+  clientMutationId: String
+  isVerified: Boolean!
+}
+
+type WriteError {
+  documentId: Int
+  errorMsg: String
+}
+
